@@ -3,7 +3,7 @@ using BACKEND.DTO.Envia;
 using BACKEND.DTO.Recibe;
 using BACKEND.Repositorios;
 using BACKEND.Servicios.Interfaces;
-using BACKEND.Servicios.Validaciones;
+using BACKEND.Servicios.Validaciones.ValidacionEspecifica;
 
 namespace BACKEND.Servicios
 {
@@ -31,7 +31,7 @@ namespace BACKEND.Servicios
                 throw new Exception("Los espacios no pueden estar en blanco o nulos.");
             }
 
-            if (validaciones.ValidarInts(usuario) == false)
+            if (validaciones.Numero(usuario.Carnet) == false)
             {
                 throw new Exception("El carnet no puede ser negativo.");
             }
@@ -41,14 +41,9 @@ namespace BACKEND.Servicios
                 throw new Exception("La contraseña debe contener al menos una mayúscula y un número.");
             }
             
-            if(validaciones.MayorDeEdad(usuario.FechaNacimiento) == false)
+            if(validaciones.Fecha(usuario.FechaNacimiento) == false)
             {
                 throw new Exception("No puede ser menor de Edad.");
-            }
-
-            if(validaciones.ValidarEspacios(usuario.Nombre, usuario.ApellidoPaterno, usuario.ApellidoMaterno, usuario.Contrasena) == false)
-            {
-                throw new Exception("No pueden existir espacios entre los datos Nombre, ApellidoPaterno, ApellidoMaterno y Contrasena");
             }
 
                 return repositorio.CreacionCliente(usuario);
